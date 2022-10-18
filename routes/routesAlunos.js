@@ -1,7 +1,15 @@
 import express from "express";
+import Aluno from "../models/AlunoModel.js";
+
 const router = express.Router();
-router.post("/", (req, res) => {
-    res.send("Rota de cadastro de aluno.");
+router.post("/", async (req, res) => {
+    const aluno = new Aluno(req.body);
+    try {
+        const novoAluno = await aluno.save();
+        res.status(201).json(novoAluno);
+    } catch (error) {
+        throw error;
+    }
 });
 router.put("/:id", (req, res) => {
     res.send("Rota de atualização de aluno.");
